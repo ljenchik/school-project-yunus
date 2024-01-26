@@ -39,7 +39,7 @@ StudentList *create_student() {
 void print_student(StudentList *student) {
   printf("\t%d\t%s\t\t", student->student.id, student->student.name);
   for (int i = 0; i < student->student.subjects->count; i++) {
-    printf("%s ", student->student.subjects->current_subject_list[i].name);
+    printf("%s ", student->student.subjects->current_subject_list[i]->name);
   }
   printf("\n");
 }
@@ -108,8 +108,8 @@ StudentList *get_student_by_id(StudentList *head, int student_id){
 void add_grade(StudentList *head, int student_id, int subject_id, int grade) {
   StudentList *found_student = get_student_by_id(head, student_id);
   for (int i = 0; i < 10; i++) {
-    if (found_student->student.subjects->current_subject_list->subjectId == subject_id) {
-      found_student->student.subjects->current_subject_list[i].grade = grade;
+    if (found_student->student.subjects->current_subject_list[i]->subjectId == subject_id) {
+      found_student->student.subjects->current_subject_list[i]->grade = grade;
       return;
     }
   }
@@ -119,8 +119,8 @@ void add_grade(StudentList *head, int student_id, int subject_id, int grade) {
 // Prints all subjects with the corresponding grades for a given student
 void print_subjects_with_grades(Student *student) {
   for (int i = 0; i < 10; i++) {
-    if (student->subjects->current_subject_list[i].subjectId != 0) {
-      printf("%s\t\t%d\n", student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
+    if (student->subjects->current_subject_list[i]->subjectId != 0) {
+      printf("%s\t\t%d\n", student->subjects->current_subject_list[i]->name, student->subjects->current_subject_list[i]->grade);
     }
   }
 }

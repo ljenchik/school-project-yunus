@@ -18,9 +18,9 @@ typedef struct subject
 
 typedef struct arrayList {
   int item_bytes;
-  int count; // current length of the array
-  int allocated_count; // max length of the array
-  Subject *current_subject_list; 
+  int count; // current length of the current_subject_list
+  int allocated_count; // max length of the current_subject_list
+  Subject *current_subject_list[20]; 
 } ArrayList;
 
 // Creating a subject
@@ -47,32 +47,33 @@ void print_subject(Subject *subject) {
 void print_subjects(ArrayList *subjects) {
   printf("Subject id\tSubject name\n");
   for (int i = 0; i < subjects->count; i++) {
-    printf("\t%d\t\%s\t\t\n", subjects->current_subject_list[i].subjectId, subjects->current_subject_list[i].name);
+    printf("\t%d\t\%s\t\t\n", subjects->current_subject_list[i]->subjectId, subjects->current_subject_list[i]->name);
   }
   printf("\n");
 }
 
 // Adding subject to array list with adding extra memory if needed
 void add_subject(ArrayList *array_list, Subject *subject) {
-  int new_count = array_list->count + 1;
-  if (new_count > array_list->allocated_count) {
-    // allocates and copies, doubles the memory
-    int new_allocated_count = array_list->allocated_count * 2;
-    if (new_allocated_count == 0) {
-      new_allocated_count = 1;
-    }
-    // ptr = (cast-type*) malloc(byte-size)
-    void *new_array_list = malloc(new_allocated_count * array_list->item_bytes);
-    if (array_list->current_subject_list != NULL) {
-      // void *memcpy(void *dest, const void * src, size_t n)
-      // n is the nimber of bytes to be copied
-      memcpy(new_array_list, array_list->current_subject_list, array_list->count * array_list->item_bytes);
-      free(array_list->current_subject_list);
-    }
-    array_list->current_subject_list = new_array_list;
-    array_list->allocated_count = new_allocated_count;
-  }
-  memcpy(array_list->current_subject_list, subject, array_list->item_bytes);
+  //int new_count = array_list->count + 1;
+  // if (new_count > array_list->allocated_count) {
+  //   // allocates and copies, doubles the memory
+  //   int new_allocated_count = array_list->allocated_count * 2;
+  //   if (new_allocated_count == 0) {
+  //     new_allocated_count = 1;
+  //   }
+  //   // ptr = (cast-type*) malloc(byte-size)
+  //   void *new_array_list = malloc(new_allocated_count * array_list->item_bytes);
+  //   if (array_list->current_subject_list != NULL) {
+  //     // void *memcpy(void *dest, const void * src, size_t n)
+  //     // n is the nimber of bytes to be copied
+  //     memcpy(new_array_list, array_list->current_subject_list, array_list->count * array_list->item_bytes);
+  //     free(array_list->current_subject_list);
+  //   }
+  //   array_list->current_subject_list = new_array_list;
+  //   array_list->allocated_count = new_allocated_count;
+  // }
+  //memcpy(array_list->current_subject_list, subject, sizeof(Subject));
+  array_list->current_subject_list[array_list->count] = subject;
   array_list->count = array_list->count + 1;
 }
 
