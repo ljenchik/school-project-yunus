@@ -13,7 +13,7 @@ typedef struct student
 {
   int id;
   char name[20];
-  Subject *subjects;
+  ArrayList *subjects;
 } Student;
 
 typedef struct student_list {
@@ -24,10 +24,9 @@ typedef struct student_list {
 
 // Creating students using a user's input
 StudentList *create_student() {
-  StudentList *new_student=malloc(sizeof(StudentList));
-  new_student->student.subjects = (Subject*) malloc( max_number_of_subjects * sizeof(Subject));
-  memset(new_student->student.subjects, 0, sizeof(Subject));
-
+  StudentList *new_student=(StudentList*)malloc(sizeof(StudentList));
+  new_student->student.subjects = (ArrayList*) malloc(sizeof(ArrayList));
+  memset(new_student->student.subjects, 0, sizeof(ArrayList));
   printf("Enter student id: ");
   scanf("%d", &new_student->student.id);
   printf("Enter student name: ");
@@ -39,8 +38,8 @@ StudentList *create_student() {
 // Printing a given student with all info
 void print_student(StudentList *student) {
   printf("\t%d\t%s\t\t", student->student.id, student->student.name);
-  for (int i = 0; i < 10; i++) {
-    printf("%s ", student->student.subjects[i].name);
+  for (int i = 0; i < student->student.subjects->count; i++) {
+    printf("%s ", student->student.subjects->current_subject_list[i].name);
   }
   printf("\n");
 }
@@ -84,14 +83,13 @@ void print_students(StudentList *head) {
 }
 
 void add_subject_to_student(Student *student, Subject *new_subject) {
-  bool empty_space = false;
-
-  for (int i = 0; i < 10; i++) {
-    if (student->subjects[i].subjectId == 0) {
-      student->subjects[i] = *new_subject;
-      return;
-    }
-  }
+  // for (int i = 0; i < 10; i++) {
+  //   if (student->subjects[i].subjectId == 0) {
+  //     student->subjects[i] = *new_subject;
+  //     return;
+  //   }
+  // }
+  add_subject(student->subjects, new_subject);
 }
 
 // Getting a student by id
@@ -110,8 +108,8 @@ StudentList *get_student_by_id(StudentList *head, int student_id){
 void add_grade(StudentList *head, int student_id, int subject_id, int grade) {
   StudentList *found_student = get_student_by_id(head, student_id);
   for (int i = 0; i < 10; i++) {
-    if (found_student->student.subjects[i].subjectId == subject_id) {
-      found_student->student.subjects[i].grade = grade;
+    if (found_student->student.subjects->current_subject_list->subjectId == subject_id) {
+      found_student->student.subjects->current_subject_list[i].grade = grade;
       return;
     }
   }
@@ -121,8 +119,8 @@ void add_grade(StudentList *head, int student_id, int subject_id, int grade) {
 // Prints all subjects with the corresponding grades for a given student
 void print_subjects_with_grades(Student *student) {
   for (int i = 0; i < 10; i++) {
-    if (student->subjects[i].subjectId != 0) {
-      printf("%s\t\t%d\n", student->subjects[i].name, student->subjects[i].grade);
+    if (student->subjects->current_subject_list[i].subjectId != 0) {
+      printf("%s\t\t%d\n", student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
     }
   }
 }
