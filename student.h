@@ -5,9 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#define max_number_of_subjects 10
 
 #include "subject.h"
+#define true 1
+#define false 0
 
 typedef struct student
 {
@@ -23,13 +24,55 @@ typedef struct student_list
 } StudentList;
 
 // Creating students using a user's input
-StudentList *create_student()
+// Creating the first student in a list
+StudentList *create_student_head()
 {
   StudentList *new_student = (StudentList *)malloc(sizeof(StudentList));
   new_student->student.subjects = (ArrayList *)malloc(sizeof(ArrayList));
   memset(new_student->student.subjects, 0, sizeof(ArrayList));
   printf("Enter student id: ");
   scanf("%d", &new_student->student.id);
+  printf("Enter student name: ");
+  scanf("%s", new_student->student.name);
+  new_student->next = NULL;
+  return new_student;
+}
+
+// Checking if student id is unique
+bool is_id_unique(StudentList *head, int student_id)
+{
+  StudentList *current = head;
+  while (current != NULL)
+  {
+    if (current->student.id == student_id)
+    {
+      return false;
+    }
+    current = current->next;
+  }
+  return true;
+}
+
+StudentList *create_student(StudentList *head)
+{
+  int st_id;
+  bool st_id_unique = false;
+
+  StudentList *new_student = (StudentList *)malloc(sizeof(StudentList));
+  new_student->student.subjects = (ArrayList *)malloc(sizeof(ArrayList));
+  memset(new_student->student.subjects, 0, sizeof(ArrayList));
+
+  while (st_id_unique != true)
+  {
+    printf("Enter student id: ");
+    scanf("%d", &st_id);
+    if (is_id_unique(head, st_id) == true)
+    {
+      new_student->student.id = st_id;
+      st_id_unique = true;
+    }
+    printf("Student with id %d already exists. Enter different student id \n", st_id);
+  }
   printf("Enter student name: ");
   scanf("%s", new_student->student.name);
   new_student->next = NULL;
@@ -166,6 +209,11 @@ void findStudentGradeInSubject(StudentList *head, int student_id, int subjectId)
       return;
     }
   }
+}
+
+// User inputs
+void user_inputs()
+{
 }
 
 #endif // _LIST_MY_PROJECT1_H

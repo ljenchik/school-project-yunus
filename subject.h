@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#define max_number_of_subjects 10
 
 typedef struct subject
 {
@@ -28,10 +27,8 @@ Subject *createSubject()
   Subject *newSubject = (Subject *)malloc(sizeof(Subject));
   printf("Enter Subject id: ");
   scanf("%d", &newSubject->subjectId);
-  getchar();
   printf("Enter Subject name: ");
   scanf("%s", newSubject->name);
-  getchar();
   return newSubject;
 }
 
@@ -80,6 +77,18 @@ void add_subject(ArrayList *array_list, Subject *subject)
   }
   array_list->current_subject_list[array_list->count] = *subject;
   array_list->count = new_count;
+}
+
+Subject *get_subject_by_id(ArrayList *subjects, int subject_id)
+{
+  for (int i = 0; i < subjects->count; i++)
+  {
+    if (subjects->current_subject_list[i].subjectId == subject_id)
+    {
+      return &subjects->current_subject_list[i];
+    }
+  }
+  return NULL;
 }
 
 #endif

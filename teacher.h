@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "subject.h"
 
 typedef struct teacher
 {
@@ -22,16 +23,15 @@ typedef struct teacher_list
 // Creating teacher
 TeacherList *createTeacher()
 {
-  TeacherList *newTeacher = (TeacherList *)malloc(sizeof(Teacher));
+  TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
   printf("Enter Teacher's name: ");
   scanf("%s", newTeacher->teacher.name);
-  getchar();
   printf("Enter subject ID: ");
+
   scanf("%d", &(newTeacher->teacher.subjectId));
-  getchar();
   printf("Enter Teacher's ID: ");
-  scanf("%d", &(newTeacher->teacher.id));
-  getchar();
+
+    scanf("%d", &(newTeacher->teacher.id));
   newTeacher->next = NULL;
   return newTeacher;
 }
@@ -87,17 +87,26 @@ void print_teachers(TeacherList *head)
 }
 
 // Finding a teacher by a given subject
-void findTeacherForSubject(TeacherList *head, int subject_id)
+void findTeacherForSubject(TeacherList *head, ArrayList *subjects, int subject_id)
 {
-  TeacherList *current = head;
-  while (current != NULL)
+  Subject *found_subject = get_subject_by_id(subjects, subject_id);
+  if (found_subject == NULL)
   {
-    if (current->teacher.subjectId == subject_id)
+    printf("There is no subject with id %d \n", subject_id);
+    return;
+  }
+  else
+  {
+    TeacherList *current = head;
+    while (current != NULL)
     {
-      print_teacher(current);
-      return;
+      if (current->teacher.subjectId == subject_id)
+      {
+        print_teacher(current);
+        return;
+      }
+      current = current->next;
     }
-    current = current->next;
   }
 }
 
