@@ -77,6 +77,7 @@ StudentList *create_student(StudentList *head)
 
   printf("Enter student name: ");
   scanf("%s", new_student->student.name);
+
   new_student->next = NULL;
   return new_student;
 }

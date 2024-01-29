@@ -20,18 +20,64 @@ typedef struct teacher_list
   struct teacher_list *next;
 } TeacherList;
 
-// Creating teacher
-TeacherList *createTeacher()
+// Creating teacher head
+TeacherList *createTeacherHead()
 {
   TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
-  printf("Enter Teacher's name: ");
+  printf("Enter teacher id: ");
+  scanf("%d", &(newTeacher->teacher.id));
+
+  printf("Enter teacher name: ");
   scanf("%s", newTeacher->teacher.name);
-  printf("Enter subject ID: ");
 
+  printf("Enter subject id: ");
   scanf("%d", &(newTeacher->teacher.subjectId));
-  printf("Enter Teacher's ID: ");
 
-    scanf("%d", &(newTeacher->teacher.id));
+  newTeacher->next = NULL;
+  return newTeacher;
+}
+
+// Checking if teacher id is unique
+bool is_teacher_id_unique(TeacherList *head, int teacher_id)
+{
+  TeacherList *current = head;
+  while (current != NULL)
+  {
+    if (current->teacher.id == teacher_id)
+    {
+      return false;
+    }
+    current = current->next;
+  }
+  return true;
+}
+
+// Creating teacher
+TeacherList *createTeacher(TeacherList *head)
+{
+  int te_id;
+  bool te_id_unique = false;
+
+  TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
+
+  while (te_id_unique != true)
+  {
+    printf("Enter teacher id: ");
+    scanf("%d", &te_id);
+    if (is_teacher_id_unique(head, te_id) == true)
+    {
+      newTeacher->teacher.id = te_id;
+      break;
+    }
+    printf("Teacher with id %d already exists. Enter different teacher id \n", te_id);
+  }
+
+  printf("Enter teacher name: ");
+  scanf("%s", newTeacher->teacher.name);
+
+  printf("Enter subject id: ");
+  scanf("%d", &(newTeacher->teacher.subjectId));
+
   newTeacher->next = NULL;
   return newTeacher;
 }
@@ -106,6 +152,27 @@ void findTeacherForSubject(TeacherList *head, ArrayList *subjects, int subject_i
         return;
       }
       current = current->next;
+    }
+  }
+}
+
+// User inputs
+void user_teachers_inputs(TeacherList *head)
+{
+  bool add_more_teachers = true;
+  char user_response = 'y';
+  while (add_more_teachers == true)
+  {
+    printf("Do you want to add another teacher? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      TeacherList *new_teacher = createTeacher(head);
+      add_teacher(head, new_teacher);
     }
   }
 }

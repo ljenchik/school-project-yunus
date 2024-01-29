@@ -37,16 +37,11 @@ int main()
   user_subject_to_student(student_head, available_subjects);
   print_students(student_head);
 
-  // // Creating teachers
-  // TeacherList *teacher_head = createTeacher();
-  // TeacherList *t1 = createTeacher();
-  // TeacherList *t2 = createTeacher();
-
-  // add_teacher(teacher_head, teacher_head);
-  // add_teacher(teacher_head, t1);
-  // add_teacher(teacher_head, t2);
-
-  // print_teachers(teacher_head);
+  // Creating teachers
+  TeacherList *teacher_head = createTeacherHead();
+  add_teacher(teacher_head, teacher_head);
+  user_teachers_inputs(teacher_head);
+  print_teachers(teacher_head);
 
   // add_grade(student_head, 1, 1, 98);
   // add_grade(student_head, 1, 2, 86);
