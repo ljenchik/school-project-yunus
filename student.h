@@ -136,11 +136,6 @@ void print_students(StudentList *head)
   }
 }
 
-void add_subject_to_student(Student *student, Subject *new_subject)
-{
-  add_subject(student->subjects, new_subject);
-}
-
 // Getting a student by id
 StudentList *get_student_by_id(StudentList *head, int student_id)
 {
@@ -154,6 +149,13 @@ StudentList *get_student_by_id(StudentList *head, int student_id)
     current = current->next;
   }
   return NULL;
+}
+
+void add_subject_to_student(StudentList *head, ArrayList *subjects, int student_id, int subject_id)
+{
+  StudentList *found_student = get_student_by_id(head, student_id);
+  Subject *found_subject = get_subject_by_id(subjects, subject_id);
+  add_subject(found_student->student.subjects, found_subject);
 }
 
 // Add a grade to a given student to a given subject
@@ -214,7 +216,7 @@ void findStudentGradeInSubject(StudentList *head, int student_id, int subjectId)
 }
 
 // User inputs
-void user_student_inputs(StudentList *head)
+void user_students_inputs(StudentList *head)
 {
   bool add_more_students = true;
   char user_response = 'y';
@@ -230,6 +232,33 @@ void user_student_inputs(StudentList *head)
     {
       StudentList *new_student = create_student(head);
       add_student(head, new_student);
+    }
+  }
+}
+
+// User inputs for assigning a subject to a student
+void user_subject_to_student(StudentList *head, ArrayList *subjects)
+{
+  bool add_more = true;
+  char user_response = 'y';
+
+  while (add_more == true)
+  {
+    printf("Do you want to assign a subject to a student? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      int st_id;
+      int sub_id;
+      printf("Enter a student id \n");
+      scanf("%d", &st_id);
+      printf("Enter a subject id \n");
+      scanf("%d", &sub_id);
+      add_subject_to_student(head, subjects, st_id, sub_id);
     }
   }
 }

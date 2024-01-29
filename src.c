@@ -15,7 +15,7 @@ int main()
   add_student(student_head, student_head);
 
   // Prompting user to add students
-  user_student_inputs(student_head);
+  user_students_inputs(student_head);
 
   // Printying all existing students
   print_students(student_head);
@@ -33,15 +33,9 @@ int main()
   // Printing all available subjects
   print_subjects(available_subjects);
 
-  // // Adding subject to a student
-  // add_subject_to_student(&(student_head->student), new_subject1);
-  // add_subject_to_student(&(student_head->student), new_subject2);
-  // add_subject_to_student(&(student_head->student), new_subject3);
-  // add_subject_to_student(&(new_student1->student), new_subject2);
-  // add_subject_to_student(&(new_student2->student), new_subject3);
-  // add_subject_to_student(&(new_student2->student), new_subject2);
-
-  // print_students(student_head);
+  // Adding subject to a student
+  user_subject_to_student(student_head, available_subjects);
+  print_students(student_head);
 
   // // Creating teachers
   // TeacherList *teacher_head = createTeacher();
