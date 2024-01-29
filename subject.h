@@ -51,7 +51,7 @@ Subject *createSubject(ArrayList *subjects)
       newSubject->subjectId = sub_id;
       break;
     }
-    printf("Subject with id %d already exists. Enter different subject id \n", sub_id);
+    printf("Subject with id %d already exists. Enter a different subject id \n", sub_id);
   }
 
   printf("Enter subject name: ");

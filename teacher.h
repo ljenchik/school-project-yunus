@@ -95,7 +95,7 @@ TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
       newTeacher->teacher.id = te_id;
       break;
     }
-    printf("Teacher with id %d already exists. Enter different teacher id \n", te_id);
+    printf("Teacher with id %d already exists. Enter a different teacher id \n", te_id);
   }
 
   printf("Enter teacher name: ");
@@ -116,7 +116,6 @@ TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
   {
     newTeacher->teacher.subjectId = sub_id;
   }
-
   newTeacher->next = NULL;
   return newTeacher;
 }

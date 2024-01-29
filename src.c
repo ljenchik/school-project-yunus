@@ -52,12 +52,11 @@ int main()
 
   // Adding grades
   user_grade_to_student(student_head);
+  // Printing all students with the corresponding subjects and grades
+  print_subjects_with_grades(student_head);
 
   // Prints all students studying a given subject
-  printf("Enter a subject id to print all students who study this subject \n");
-  int students_by_subject;
-  scanf("%d", &students_by_subject);
-  findStudentsBySubject(student_head, students_by_subject);
+  user_students_by_subject(student_head, available_subjects);
 
   // Finding a teacher by a specified subject id
   user_find_teacher_by_subject(teacher_head, available_subjects);
