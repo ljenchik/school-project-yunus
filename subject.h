@@ -21,14 +21,42 @@ typedef struct arrayList
   Subject *current_subject_list;
 } ArrayList;
 
-// Creating a subject
-Subject *createSubject()
+// Checking if subject id is unique
+bool is_subject_id_unique(ArrayList *subjects, int subject_id)
 {
+  for (int i = 0; i < subjects->count; i++)
+  {
+    if (subjects->current_subject_list[i].subjectId == subject_id)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Creating a subject
+Subject *createSubject(ArrayList *subjects)
+{
+  int sub_id;
+  bool sub_id_unique = false;
+
   Subject *newSubject = (Subject *)malloc(sizeof(Subject));
-  printf("Enter Subject id: ");
-  scanf("%d", &newSubject->subjectId);
-  printf("Enter Subject name: ");
+
+  while (sub_id_unique != true)
+  {
+    printf("Enter Subject id: ");
+    scanf("%d", &sub_id);
+    if (is_subject_id_unique(subjects, sub_id) == true)
+    {
+      newSubject->subjectId = sub_id;
+      break;
+    }
+    printf("Subject with id %d already exists. Enter different subject id \n", sub_id);
+  }
+
+  printf("Enter subject name: ");
   scanf("%s", newSubject->name);
+
   return newSubject;
 }
 
@@ -89,6 +117,27 @@ Subject *get_subject_by_id(ArrayList *subjects, int subject_id)
     }
   }
   return NULL;
+}
+
+// User inputs
+void user_subjects_inputs(ArrayList *subjects)
+{
+  bool add_more_subjects = true;
+  char user_response = 'y';
+  while (add_more_subjects == true)
+  {
+    printf("Do you want to add another subject? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      Subject *new_subject = createSubject(subjects);
+      add_subject(subjects, new_subject);
+    }
+  }
 }
 
 #endif

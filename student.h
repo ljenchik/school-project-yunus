@@ -63,16 +63,18 @@ StudentList *create_student(StudentList *head)
   memset(new_student->student.subjects, 0, sizeof(ArrayList));
 
   while (st_id_unique != true)
+
   {
     printf("Enter student id: ");
     scanf("%d", &st_id);
     if (is_id_unique(head, st_id) == true)
     {
       new_student->student.id = st_id;
-      st_id_unique = true;
+      break;
     }
     printf("Student with id %d already exists. Enter different student id \n", st_id);
   }
+
   printf("Enter student name: ");
   scanf("%s", new_student->student.name);
   new_student->next = NULL;
@@ -212,8 +214,24 @@ void findStudentGradeInSubject(StudentList *head, int student_id, int subjectId)
 }
 
 // User inputs
-void user_inputs()
+void user_student_inputs(StudentList *head)
 {
+  bool add_more_students = true;
+  char user_response = 'y';
+  while (add_more_students == true)
+  {
+    printf("Do you want to add another student? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      StudentList *new_student = create_student(head);
+      add_student(head, new_student);
+    }
+  }
 }
 
 #endif // _LIST_MY_PROJECT1_H

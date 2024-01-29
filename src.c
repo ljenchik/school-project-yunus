@@ -12,28 +12,28 @@ int main()
 {
 
   StudentList *student_head = create_student_head();
-  StudentList *new_student1 = create_student(student_head);
-  // StudentList *new_student2 = create_student();
-
-  // Adding students to StudentList
   add_student(student_head, student_head);
-  add_student(student_head, new_student1);
-  // add_student(student_head, new_student2);
 
-  // // Printying all existing students
-  // print_students(student_head);
+  // Prompting user to add students
+  user_student_inputs(student_head);
 
-  // ArrayList *available_subjects = malloc(sizeof(ArrayList));
+  // Printying all existing students
+  print_students(student_head);
 
-  // Subject *new_subject1 = createSubject();
-  // Subject *new_subject2 = createSubject();
-  // Subject *new_subject3 = createSubject();
+  // Creatina an array of all available subjects
+  ArrayList *available_subjects = malloc(sizeof(ArrayList));
 
-  // add_subject(available_subjects, new_subject1);
-  // add_subject(available_subjects, new_subject2);
-  // add_subject(available_subjects, new_subject3);
+  // Creating and adding a new subject to available_subjects
+  Subject *new_subject = createSubject(available_subjects);
+  add_subject(available_subjects, new_subject);
 
-  // // Adding subject
+  // Prompting user to add subjects
+  user_subjects_inputs(available_subjects);
+
+  // Printing all available subjects
+  print_subjects(available_subjects);
+
+  // // Adding subject to a student
   // add_subject_to_student(&(student_head->student), new_subject1);
   // add_subject_to_student(&(student_head->student), new_subject2);
   // add_subject_to_student(&(student_head->student), new_subject3);
@@ -41,7 +41,7 @@ int main()
   // add_subject_to_student(&(new_student2->student), new_subject3);
   // add_subject_to_student(&(new_student2->student), new_subject2);
 
-  print_students(student_head);
+  // print_students(student_head);
 
   // // Creating teachers
   // TeacherList *teacher_head = createTeacher();
