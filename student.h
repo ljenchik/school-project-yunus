@@ -132,9 +132,10 @@ void print_subjects_with_grades(Student *student)
   {
     if (student->subjects->current_subject_list[i].subjectId != 0)
     {
-      printf("%s\t\t%d\n", student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
+      printf("%s\t\t%s\t\t%d\n", student->name, student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
     }
   }
+  printf("\n");
 }
 
 // Prints all students studying a given subject
@@ -151,6 +152,19 @@ void findStudentsBySubject(StudentList *head, int subject_id)
       }
     }
     current = current->next;
+  }
+}
+
+void findStudentGradeInSubject(StudentList *head, int student_id, int subjectId)
+{
+  StudentList *found_student = get_student_by_id(head, student_id);
+  for (int i = 0; i < found_student->student.subjects->count; i++)
+  {
+    if (found_student->student.subjects->current_subject_list[i].subjectId == subjectId)
+    {
+      printf("%d \n", found_student->student.subjects->current_subject_list[i].grade);
+      return;
+    }
   }
 }
 
