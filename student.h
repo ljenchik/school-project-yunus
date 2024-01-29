@@ -93,12 +93,6 @@ void print_students(StudentList *head)
 
 void add_subject_to_student(Student *student, Subject *new_subject)
 {
-  // for (int i = 0; i < 10; i++) {
-  //   if (student->subjects[i].subjectId == 0) {
-  //     student->subjects[i] = *new_subject;
-  //     return;
-  //   }
-  // }
   add_subject(student->subjects, new_subject);
 }
 
@@ -140,6 +134,23 @@ void print_subjects_with_grades(Student *student)
     {
       printf("%s\t\t%d\n", student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
     }
+  }
+}
+
+// Prints all students studying a given subject
+void findStudentsBySubject(StudentList *head, int subject_id)
+{
+  StudentList *current = head;
+  while (current != NULL)
+  {
+    for (int i = 0; i < current->student.subjects->count; i++)
+    {
+      if (current->student.subjects->current_subject_list[i].subjectId == subject_id)
+      {
+        printf("%s \n", current->student.name);
+      }
+    }
+    current = current->next;
   }
 }
 
