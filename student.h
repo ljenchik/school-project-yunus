@@ -217,14 +217,18 @@ void findStudentsBySubject(StudentList *head, int subject_id)
   }
 }
 
-void findStudentGradeInSubject(StudentList *head, int student_id, int subjectId)
+void findStudentGradeInSubject(StudentList *head, ArrayList *subjects, int student_id, int subjectId)
 {
   StudentList *found_student = get_student_by_id(head, student_id);
+  Subject *found_subject = get_subject_by_id(subjects, student_id);
   for (int i = 0; i < found_student->student.subjects->count; i++)
   {
     if (found_student->student.subjects->current_subject_list[i].subjectId == subjectId)
     {
-      printf("%d \n", found_student->student.subjects->current_subject_list[i].grade);
+      printf("Student %s in a subject %s got a grade %d \n",
+             found_student->student.name,
+             found_subject->name,
+             found_student->student.subjects->current_subject_list[i].grade);
       return;
     }
   }
@@ -305,6 +309,34 @@ void user_grade_to_student(StudentList *head)
       scanf("%d", &grade);
       add_grade(head, st_id, sub_id, grade);
       print_subjects_with_grades(head, st_id);
+    }
+  }
+}
+
+// User inputs to get grade for a given subject and a student
+void user_find_grade(StudentList *head, ArrayList *subjects)
+{
+  bool add_more = true;
+  int sub_id;
+  int st_id;
+  char user_response = 'y';
+  while (add_more == true)
+  {
+    printf("Do you want to print a grade for a given subject and a student? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      printf("Enter a student id \n");
+      scanf("%d", &st_id);
+
+      printf("Enter a subject id \n");
+      scanf("%d", &sub_id);
+
+      findStudentGradeInSubject(head, subjects, st_id, sub_id);
     }
   }
 }

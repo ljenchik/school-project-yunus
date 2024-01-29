@@ -48,6 +48,7 @@ int main()
 
   print_students(student_head);
   print_subjects(available_subjects);
+  print_teachers(teacher_head);
 
   // Adding grades
   user_grade_to_student(student_head);
@@ -58,12 +59,11 @@ int main()
   scanf("%d", &students_by_subject);
   findStudentsBySubject(student_head, students_by_subject);
 
-  // // Finding a teacher by a specified subject id
-  // printf("Teacher id\tName\t\tSubject id\n");
-  // findTeacherForSubject(teacher_head, available_subjects, 3);
+  // Finding a teacher by a specified subject id
+  user_find_teacher_by_subject(teacher_head, available_subjects);
 
-  // // Finding a grade for a given student and a given subject
-  // findStudentGradeInSubject(student_head, 1, 2);
+  // Finding a grade for a given student and a given subject
+  user_find_grade(student_head, available_subjects);
 
   return 0;
 }

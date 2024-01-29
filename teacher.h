@@ -219,4 +219,27 @@ void user_teachers_inputs(TeacherList *head, ArrayList *subjects)
   }
 }
 
+// User inputs to get teacher by subject
+void user_find_teacher_by_subject(TeacherList *head, ArrayList *subjects)
+{
+  bool add_more = true;
+  int sub_id;
+  char user_response = 'y';
+  while (add_more == true)
+  {
+    printf("Do you want to print a teacher by subject? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      printf("Enter a subject id \n");
+      scanf("%d", &sub_id);
+      findTeacherForSubject(head, subjects, sub_id);
+    }
+  }
+}
+
 #endif
