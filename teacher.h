@@ -21,8 +21,9 @@ typedef struct teacher_list
 } TeacherList;
 
 // Creating teacher head
-TeacherList *createTeacherHead()
+TeacherList *createTeacherHead(ArrayList *subjects)
 {
+  int sub_id;
   TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
   printf("Enter teacher id: ");
   scanf("%d", &(newTeacher->teacher.id));
@@ -31,7 +32,16 @@ TeacherList *createTeacherHead()
   scanf("%s", newTeacher->teacher.name);
 
   printf("Enter subject id: ");
-  scanf("%d", &(newTeacher->teacher.subjectId));
+  scanf("%d", &sub_id);
+  Subject *found_subject = get_subject_by_id(subjects, sub_id);
+  if (found_subject == NULL)
+  {
+    printf("Subject with id %d does not exist \n", sub_id);
+  }
+  else
+  {
+    newTeacher->teacher.subjectId = sub_id;
+  }
 
   newTeacher->next = NULL;
   return newTeacher;
@@ -52,10 +62,26 @@ bool is_teacher_id_unique(TeacherList *head, int teacher_id)
   return true;
 }
 
+// Checking if teacher teaches only one subjects
+bool is_teacher_subject_unique(TeacherList *head, int subject_id)
+{
+  TeacherList *current = head;
+  while (current != NULL)
+  {
+    if (current->teacher.subjectId == subject_id)
+    {
+      return false;
+    }
+    current = current->next;
+  }
+  return true;
+}
+
 // Creating teacher
-TeacherList *createTeacher(TeacherList *head)
+TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
 {
   int te_id;
+  int sub_id;
   bool te_id_unique = false;
 
   TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
@@ -76,7 +102,20 @@ TeacherList *createTeacher(TeacherList *head)
   scanf("%s", newTeacher->teacher.name);
 
   printf("Enter subject id: ");
-  scanf("%d", &(newTeacher->teacher.subjectId));
+  scanf("%d", &sub_id);
+  Subject *found_subject = get_subject_by_id(subjects, sub_id);
+  if (found_subject == NULL)
+  {
+    printf("Subject with id %d does not exist \n", sub_id);
+  }
+  else if (is_teacher_subject_unique(head, sub_id) == false)
+  {
+    printf("Subject with id %d is assigned to another teacher \n", sub_id);
+  }
+  else
+  {
+    newTeacher->teacher.subjectId = sub_id;
+  }
 
   newTeacher->next = NULL;
   return newTeacher;
@@ -104,7 +143,7 @@ void add_teacher(TeacherList *head, TeacherList *new_teacher)
   }
 }
 
-// Printing a teacher
+// Printing a teacher, printing only unique pairs teacher-subject
 void print_teacher(TeacherList *teacher)
 {
   printf("\t%d\t%s\t\t%d\n", teacher->teacher.id, teacher->teacher.name, teacher->teacher.subjectId);
@@ -125,7 +164,10 @@ void print_teachers(TeacherList *head)
     printf("\n");
     while (current != NULL)
     {
-      print_teacher(current);
+      if (current->teacher.subjectId != 0)
+      {
+        print_teacher(current);
+      }
       current = current->next;
     }
     printf("\n");
@@ -157,7 +199,7 @@ void findTeacherForSubject(TeacherList *head, ArrayList *subjects, int subject_i
 }
 
 // User inputs
-void user_teachers_inputs(TeacherList *head)
+void user_teachers_inputs(TeacherList *head, ArrayList *subjects)
 {
   bool add_more_teachers = true;
   char user_response = 'y';
@@ -171,7 +213,7 @@ void user_teachers_inputs(TeacherList *head)
     }
     else
     {
-      TeacherList *new_teacher = createTeacher(head);
+      TeacherList *new_teacher = createTeacher(head, subjects);
       add_teacher(head, new_teacher);
     }
   }

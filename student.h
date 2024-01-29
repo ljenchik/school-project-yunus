@@ -156,14 +156,27 @@ void add_subject_to_student(StudentList *head, ArrayList *subjects, int student_
 {
   StudentList *found_student = get_student_by_id(head, student_id);
   Subject *found_subject = get_subject_by_id(subjects, subject_id);
-  add_subject(found_student->student.subjects, found_subject);
+  if (found_student == NULL)
+  {
+    printf("Student with id %d does not exist \n", student_id);
+    return;
+  }
+  else if (found_subject == NULL)
+  {
+    printf("Subject with id %d does not exist \n", subject_id);
+    return;
+  }
+  else
+  {
+    add_subject(found_student->student.subjects, found_subject);
+  }
 }
 
 // Add a grade to a given student to a given subject
 void add_grade(StudentList *head, int student_id, int subject_id, int grade)
 {
   StudentList *found_student = get_student_by_id(head, student_id);
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < found_student->student.subjects->count; i++)
   {
     if (found_student->student.subjects->current_subject_list[i].subjectId == subject_id)
     {
@@ -174,13 +187,14 @@ void add_grade(StudentList *head, int student_id, int subject_id, int grade)
 }
 
 // Prints all subjects with the corresponding grades for a given student
-void print_subjects_with_grades(Student *student)
+void print_subjects_with_grades(StudentList *head, int student_id)
 {
-  for (int i = 0; i < student->subjects->count; i++)
+  StudentList *found_student = get_student_by_id(head, student_id);
+  for (int i = 0; i < found_student->student.subjects->count; i++)
   {
-    if (student->subjects->current_subject_list[i].subjectId != 0)
+    if (found_student->student.id == student_id)
     {
-      printf("%s\t\t%s\t\t%d\n", student->name, student->subjects->current_subject_list[i].name, student->subjects->current_subject_list[i].grade);
+      printf("%s\t\t%s\t\t%d\n", found_student->student.name, found_student->student.subjects->current_subject_list[i].name, found_student->student.subjects->current_subject_list[i].grade);
     }
   }
   printf("\n");
@@ -196,7 +210,7 @@ void findStudentsBySubject(StudentList *head, int subject_id)
     {
       if (current->student.subjects->current_subject_list[i].subjectId == subject_id)
       {
-        printf("%s \n", current->student.name);
+        print_student(current);
       }
     }
     current = current->next;
@@ -260,6 +274,37 @@ void user_subject_to_student(StudentList *head, ArrayList *subjects)
       printf("Enter a subject id \n");
       scanf("%d", &sub_id);
       add_subject_to_student(head, subjects, st_id, sub_id);
+    }
+  }
+}
+
+// User inputs for grades
+void user_grade_to_student(StudentList *head)
+{
+  bool add_more = true;
+  char user_response = 'y';
+
+  while (add_more == true)
+  {
+    printf("Do you want to assign a grade for a subject to a student? y/n \n");
+    scanf(" %c", &user_response);
+    if (user_response != 'y')
+    {
+      break;
+    }
+    else
+    {
+      int st_id;
+      int sub_id;
+      int grade;
+      printf("Enter a student id \n");
+      scanf("%d", &st_id);
+      printf("Enter a subject id \n");
+      scanf("%d", &sub_id);
+      printf("Enter a grade\n");
+      scanf("%d", &grade);
+      add_grade(head, st_id, sub_id, grade);
+      print_subjects_with_grades(head, st_id);
     }
   }
 }

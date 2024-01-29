@@ -38,31 +38,29 @@ int main()
   print_students(student_head);
 
   // Creating teachers
-  TeacherList *teacher_head = createTeacherHead();
+  TeacherList *teacher_head = createTeacherHead(available_subjects);
   add_teacher(teacher_head, teacher_head);
-  user_teachers_inputs(teacher_head);
+  user_teachers_inputs(teacher_head, available_subjects);
   print_teachers(teacher_head);
 
-  // add_grade(student_head, 1, 1, 98);
-  // add_grade(student_head, 1, 2, 86);
+  printf("===============================================================\n");
+  printf("===============================================================\n");
 
-  // add_grade(student_head, 2, 2, 34);
-  // add_grade(student_head, 3, 3, 100);
+  print_students(student_head);
+  print_subjects(available_subjects);
 
-  // printf("Subject\t\tGrade\n");
-  // print_subjects_with_grades(&student_head->student);
-  // print_subjects_with_grades(&new_student1->student);
-  // print_subjects_with_grades(&new_student2->student);
+  // Adding grades
+  user_grade_to_student(student_head);
 
-  // // Prints all students studying a given subject
-  // printf("Enter a subject id to print all students who study this subject \n");
-  // int students_by_subject;
-  // scanf("%d", &students_by_subject);
-  // findStudentsBySubject(student_head, students_by_subject);
+  // Prints all students studying a given subject
+  printf("Enter a subject id to print all students who study this subject \n");
+  int students_by_subject;
+  scanf("%d", &students_by_subject);
+  findStudentsBySubject(student_head, students_by_subject);
 
   // // Finding a teacher by a specified subject id
   // printf("Teacher id\tName\t\tSubject id\n");
-  // findTeacherForSubject(teacher_head, 3);
+  // findTeacherForSubject(teacher_head, available_subjects, 3);
 
   // // Finding a grade for a given student and a given subject
   // findStudentGradeInSubject(student_head, 1, 2);
