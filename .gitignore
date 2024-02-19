@@ -3,3 +3,9 @@
 .vscode
 
 c-training.docx
+
+*.docx
+
+*.o
+
+*.txt

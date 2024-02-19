@@ -1,30 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
+#include "student.h"
 #include "subject.h"
 #include "teacher.h"
-#include "student.h"
 
-int main()
+int main(void)
 
 {
-
   StudentList *student_head = create_student_head();
   add_student(student_head, student_head);
 
-  // Prompting user to add students
+  // Prompting user to add students as many as they want
   user_students_inputs(student_head);
 
   // Printying all existing students
   print_students(student_head);
 
-  // Creatina an array of all available subjects
+  // Creating an array of subjects
   ArrayList *available_subjects = malloc(sizeof(ArrayList));
+  if (available_subjects == NULL)
+  {
+    printf("Memory allocation for available subjects failed\n");
+    exit(EXIT_FAILURE);
+  }
 
   // Creating and adding a new subject to available_subjects
-  Subject *new_subject = createSubject(available_subjects);
+  Subject *new_subject = create_subject(available_subjects);
   add_subject(available_subjects, new_subject);
 
   // Prompting user to add subjects
@@ -63,6 +62,8 @@ int main()
 
   // Finding a grade for a given student and a given subject
   user_find_grade(student_head, available_subjects);
+
+  free(available_subjects);
 
   return 0;
 }
