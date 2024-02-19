@@ -50,11 +50,21 @@ int main(void)
     printf("8. Find grades by student and subject\n");
     printf("0. Exit\n");
 
-    int option;
+    char option[3]; // Including space for null terminator
     printf("Enter your choice: ");
-    scanf("%d", &option);
+    // fgets(option, sizeof(option), stdin);
+    scanf("%s", option);
 
-    switch (option)
+    // Convert string to integer
+    int choice = atoi(option);
+
+    if (choice < 0 || choice > 8)
+    {
+      printf("Invalid choice. Try again.\n");
+      continue;
+    }
+
+    switch (choice)
     {
     case 1:
       user_students_inputs(student_head);
@@ -87,12 +97,10 @@ int main(void)
       break;
     case 0:
       printf("Exiting the program.\n");
+      free(available_subjects);
       return 0;
     default:
       printf("Invalid choice. Try again.\n");
     }
   }
-  free(available_subjects);
-
-  return 0;
 }
