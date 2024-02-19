@@ -32,7 +32,7 @@ int main(void)
 
   printf("================= Add teachers ==============\n");
   // Creating teachers
-  TeacherList *teacher_head = createTeacherHead(available_subjects);
+  TeacherList *teacher_head = create_teacher_head(available_subjects);
   add_teacher(teacher_head, teacher_head);
   user_teachers_inputs(teacher_head, available_subjects);
   print_teachers(teacher_head);

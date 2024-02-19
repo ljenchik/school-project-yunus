@@ -163,11 +163,19 @@ int add_subject_to_student(StudentList *head, ArrayList *subjects, int student_i
 {
   StudentList *found_student = get_student_by_id(head, student_id);
   Subject *found_subject = get_subject_by_id(subjects, subject_id);
+  Subject *found_subject_available = get_subject_by_id(found_student->student.subjects, subject_id);
   if (found_student == NULL || found_subject == NULL)
   {
     printf("Student with id %d and/or subject with id %d do not exist\n", student_id, subject_id);
     return -1;
   }
+
+  if (found_subject_available != NULL)
+  {
+    printf("Student with id %d already studying subject with id %d \n", student_id, subject_id);
+    return -1;
+  }
+
   add_subject(found_student->student.subjects, found_subject);
   return 0;
 }
@@ -242,8 +250,9 @@ void find_students_by_subject(StudentList *head, ArrayList *subjects, int subjec
 int find_student_grade_by_subject(StudentList *head, ArrayList *subjects, int student_id, int subject_id)
 {
   StudentList *found_student = get_student_by_id(head, student_id);
-  Subject *found_subject = get_subject_by_id(subjects, student_id);
-  if (found_student == NULL || found_subject == NULL)
+  Subject *found_subject = get_subject_by_id(subjects, subject_id);
+  Subject *found_subject_in_available = get_subject_by_id(found_student->student.subjects, subject_id);
+  if (found_student == NULL || found_subject == NULL || found_subject_in_available == NULL)
   {
     printf("Student with id %d and/or subject with id %d do not exist \n", student_id, subject_id);
     return -1;
@@ -389,7 +398,7 @@ void user_find_grade(StudentList *head, ArrayList *subjects)
   char user_response;
   while (add_more)
   {
-    printf("Do you want to print a grade for a given subject and a student? y/n \n");
+    printf("Do you want to find a grade for a given subject and a student? y/n \n");
     scanf(" %c", &user_response);
     if (user_response == 'n')
     {

@@ -22,7 +22,7 @@ typedef struct teacher_list
 } TeacherList;
 
 // Creating teacher head
-TeacherList *createTeacherHead(ArrayList *subjects);
+TeacherList *create_teacher_head(ArrayList *subjects);
 
 // Checking if teacher id is unique
 bool is_teacher_id_unique(TeacherList *head, int teacher_id);

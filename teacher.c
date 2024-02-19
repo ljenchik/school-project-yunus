@@ -1,15 +1,15 @@
 #include "teacher.h"
 
 // Creating teacher head
-TeacherList *createTeacherHead(ArrayList *subjects)
+TeacherList *create_teacher_head(ArrayList *subjects)
 {
   int sub_id;
-  TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
+  TeacherList *new_teacher = (TeacherList *)malloc(sizeof(TeacherList));
   printf("Enter teacher id: ");
-  scanf("%d", &(newTeacher->teacher.id));
+  scanf("%d", &(new_teacher->teacher.id));
 
   printf("Enter teacher name: ");
-  scanf("%s", newTeacher->teacher.name);
+  scanf("%s", new_teacher->teacher.name);
 
   printf("Enter subject id: ");
   scanf("%d", &sub_id);
@@ -20,11 +20,11 @@ TeacherList *createTeacherHead(ArrayList *subjects)
   }
   else
   {
-    newTeacher->teacher.subjectId = sub_id;
+    new_teacher->teacher.subjectId = sub_id;
   }
 
-  newTeacher->next = NULL;
-  return newTeacher;
+  new_teacher->next = NULL;
+  return new_teacher;
 }
 
 // Checking if teacher id is unique
