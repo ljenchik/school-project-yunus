@@ -1,3 +1,0 @@
-1, Jack, s1, s2, s3
-2, Sam, s1, s2, s4
-3, Lisa, s2, s4
