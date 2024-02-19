@@ -1,4 +1,5 @@
 #include "student.h"
+#include <ctype.h>
 
 // Creating the first student in a list
 StudentList *create_student_head()
@@ -19,6 +20,14 @@ StudentList *create_student_head()
   }
 
   memset(new_student->student.subjects, 0, sizeof(ArrayList));
+
+  new_student->student.name = malloc(sizeof(new_student->student.name));
+  if (new_student->student.name == NULL)
+  {
+    printf("Memory allocation for student's name failed\n");
+    free(new_student);
+    exit(EXIT_FAILURE);
+  }
 
   printf("Enter student id: ");
   scanf("%d", &new_student->student.id);
@@ -65,6 +74,14 @@ StudentList *create_student(StudentList *head)
   }
   memset(new_student->student.subjects, 0, sizeof(ArrayList));
 
+  new_student->student.name = malloc(sizeof(new_student->student.name));
+  if (new_student->student.name == NULL)
+  {
+    printf("Memory allocation for student's name failed\n");
+    free(new_student);
+    exit(EXIT_FAILURE);
+  }
+
   // This loop is checking if student's id is unique; if it's true, loops breaks
   while (student_id_unique != true)
   {
@@ -72,7 +89,6 @@ StudentList *create_student(StudentList *head)
     scanf("%d", &st_id);
     if (is_id_unique(head, st_id) == true)
     {
-      student_id_unique = true;
       new_student->student.id = st_id;
     }
     else
@@ -280,7 +296,7 @@ void user_students_inputs(StudentList *head)
   while (add_more_students)
   {
     printf("Do you want to add another student? y/n \n");
-    scanf(" %c", &user_response); // Note the space before %c to consume newline characters
+    scanf(" %c", &user_response);
     if (user_response == 'n')
     {
       add_more_students = false;

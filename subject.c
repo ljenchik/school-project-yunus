@@ -42,6 +42,13 @@ Subject *create_subject(ArrayList *subjects)
     }
   }
 
+  new_subject->name = malloc(sizeof(new_subject->name));
+  if (new_subject->name == NULL)
+  {
+    printf("Memory allocation for subject's name failed\n");
+    exit(EXIT_FAILURE);
+  }
+
   printf("Enter subject name: ");
   scanf("%s", new_subject->name);
 

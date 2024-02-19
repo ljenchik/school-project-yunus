@@ -10,7 +10,7 @@
 
 typedef struct teacher
 {
-  char name[20];
+  char *name;
   int id;
   int subjectId;
 } Teacher;

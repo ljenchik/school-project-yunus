@@ -9,7 +9,7 @@
 typedef struct subject
 {
   int subjectId;
-  char name[20];
+  char *name;
   int totalStudents;
   int grade;
 } Subject;

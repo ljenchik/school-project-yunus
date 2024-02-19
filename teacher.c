@@ -8,6 +8,14 @@ TeacherList *create_teacher_head(ArrayList *subjects)
   printf("Enter teacher id: ");
   scanf("%d", &(new_teacher->teacher.id));
 
+  new_teacher->teacher.name = malloc(sizeof(new_teacher->teacher.name));
+  if (new_teacher->teacher.name == NULL)
+  {
+    printf("Memory allocation for teacher's name failed\n");
+    free(new_teacher);
+    exit(EXIT_FAILURE);
+  }
+
   printf("Enter teacher name: ");
   scanf("%s", new_teacher->teacher.name);
 
@@ -64,7 +72,7 @@ TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
   int sub_id;
   bool te_id_unique = false;
 
-  TeacherList *newTeacher = (TeacherList *)malloc(sizeof(TeacherList));
+  TeacherList *new_teacher = (TeacherList *)malloc(sizeof(TeacherList));
 
   while (te_id_unique != true)
   {
@@ -72,14 +80,22 @@ TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
     scanf("%d", &te_id);
     if (is_teacher_id_unique(head, te_id) == true)
     {
-      newTeacher->teacher.id = te_id;
+      new_teacher->teacher.id = te_id;
       break;
     }
     printf("Teacher with id %d already exists. Enter a different teacher id \n", te_id);
   }
 
+  new_teacher->teacher.name = malloc(sizeof(new_teacher->teacher.name));
+  if (new_teacher->teacher.name == NULL)
+  {
+    printf("Memory allocation for teacher's name failed\n");
+    free(new_teacher);
+    exit(EXIT_FAILURE);
+  }
+
   printf("Enter teacher name: ");
-  scanf("%s", newTeacher->teacher.name);
+  scanf("%s", new_teacher->teacher.name);
 
   printf("Enter subject id: ");
   scanf("%d", &sub_id);
@@ -94,10 +110,10 @@ TeacherList *createTeacher(TeacherList *head, ArrayList *subjects)
   }
   else
   {
-    newTeacher->teacher.subjectId = sub_id;
+    new_teacher->teacher.subjectId = sub_id;
   }
-  newTeacher->next = NULL;
-  return newTeacher;
+  new_teacher->next = NULL;
+  return new_teacher;
 }
 
 void add_teacher(TeacherList *head, TeacherList *new_teacher)
@@ -181,7 +197,7 @@ void find_teacher_by_subject(TeacherList *head, ArrayList *subjects, int subject
 void user_teachers_inputs(TeacherList *head, ArrayList *subjects)
 {
   bool add_more_teachers = true;
-  char user_response = 'y';
+  char user_response;
   while (add_more_teachers == true)
   {
     printf("Do you want to add another teacher? y/n \n");
@@ -203,7 +219,7 @@ void user_find_teacher_by_subject(TeacherList *head, ArrayList *subjects)
 {
   bool add_more = true;
   int sub_id;
-  char user_response = 'y';
+  char user_response;
   while (add_more == true)
   {
     printf("Do you want to print a teacher by subject? y/n \n");

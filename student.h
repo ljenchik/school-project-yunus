@@ -11,7 +11,7 @@
 typedef struct student
 {
   int id;
-  char name[20];
+  char *name;
   ArrayList *subjects;
 } Student;
 
